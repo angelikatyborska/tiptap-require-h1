@@ -10,21 +10,39 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import React from "react";
 import "./App.css";
 
+const Title = Heading.extend({
+  name: "title",
+  group: "title",
+}).configure({ levels: [1] });
+
+const DocumentWithTitle = Document.extend({
+  content: "title block+",
+});
+
 export default () => {
   const editor = useEditor({
     extensions: [
-      Document,
+      DocumentWithTitle,
       Paragraph,
       Text,
+      Title,
       Heading,
       Bold,
       Italic,
       History,
       Placeholder.configure({
-        placeholder: "What's on your mind?",
+        showOnlyCurrent: false,
+        placeholder: ({ node }) => {
+          if (node.type.name === "title") {
+            return "What's the title?";
+          }
+
+          return "What's the story?";
+        },
       }),
     ],
     content: `
+    <h1></h1>
     <p></p>
   `,
   });
