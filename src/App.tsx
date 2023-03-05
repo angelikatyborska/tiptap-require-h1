@@ -13,6 +13,7 @@ import "./App.css";
 const Title = Heading.extend({
   name: "title",
   group: "title",
+  parseHTML: () => [{ tag: "h1:first-child" }],
 }).configure({ levels: [1] });
 
 const DocumentWithTitle = Document.extend({
@@ -42,8 +43,16 @@ export default () => {
       }),
     ],
     content: `
-    <h1></h1>
-    <p></p>
+    <h1>Story 1</h1>
+    <h2>Chapter 1</h2>
+    <p>...</p>
+    <h2>Chapter 2</h2>
+    <p>...</p>
+    <h1>Story 2</h1>
+    <h2>Chapter 1</h2>
+    <p>...</p>
+    <h2>Chapter 2</h2>
+    <p>...</p>
   `,
   });
 
