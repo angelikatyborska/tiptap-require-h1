@@ -35,6 +35,10 @@ export default () => {
     <div className="editorWrapper">
       <h1>TipTap Require H1 Demo</h1>
       <EditorContent editor={editor} />
+      <h2>HTML Output</h2>
+      <pre>
+        {editor.getHTML()}
+      </pre>
     </div>
   )
 }
