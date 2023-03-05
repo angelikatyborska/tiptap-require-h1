@@ -1,7 +1,7 @@
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
-import Heading from "@tiptap/extension-heading";
+import Heading, { Level } from "@tiptap/extension-heading";
 import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
 import History from "@tiptap/extension-history";
@@ -13,6 +13,7 @@ import "./App.css";
 const Title = Heading.extend({
   name: "title",
   group: "title",
+  parseHTML: () => [{ tag: "h1:first-child" }],
 }).configure({ levels: [1] });
 
 const DocumentWithTitle = Document.extend({
@@ -42,8 +43,16 @@ export default () => {
       }),
     ],
     content: `
-    <h1></h1>
-    <p></p>
+    <h1>Story 1</h1>
+    <h2>Chapter 1</h2>
+    <p>...</p>
+    <h2>Chapter 2</h2>
+    <p>...</p>
+    <h1>Story 2</h1>
+    <h2>Chapter 1</h2>
+    <p>...</p>
+    <h2>Chapter 2</h2>
+    <p>...</p>
   `,
   });
 
