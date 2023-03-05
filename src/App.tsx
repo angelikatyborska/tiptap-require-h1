@@ -1,34 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import Document from '@tiptap/extension-document'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
+import Heading from '@tiptap/extension-heading'
+import Bold from '@tiptap/extension-bold'
+import Italic from '@tiptap/extension-italic'
+import History from '@tiptap/extension-history'
+import Placeholder from '@tiptap/extension-placeholder'
+import { EditorContent, useEditor } from '@tiptap/react'
+import React from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default () => {
+  const editor = useEditor({
+    extensions: [
+      Document,
+      Paragraph,
+      Text,
+      Heading,
+      Bold,
+      Italic,
+      History,
+      Placeholder.configure({
+        placeholder: 'What\'s on your mind?'
+      })
+    ],
+    content: `
+    <p></p>
+  `,
+  })
+
+  if (!editor) { return null }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className="editorWrapper">
+      <h1>TipTap Require H1 Demo</h1>
+      <EditorContent editor={editor} />
     </div>
   )
 }
-
-export default App
