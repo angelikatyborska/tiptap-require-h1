@@ -4,6 +4,21 @@
   max-width: 100%;
 }
 
+.editorControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.editorControls button {
+  border-bottom: 3px solid transparent;
+}
+
+.editorControls button.is-active {
+  border-bottom: 3px solid black;
+}
+
 .ProseMirror {
   padding: 2vw;
   width: 100%;
@@ -16,12 +31,6 @@
 
 .ProseMirror-selectednode {
   outline: 2px solid red;
-}
-
-.ProseMirror img {
-  display: block;
-  max-width: 100%;
-  margin: 1em 0;
 }
 
 .ProseMirror p.is-editor-empty:first-of-type::before {
