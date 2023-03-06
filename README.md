@@ -1,0 +1,1 @@
+# tiptap-require-h1
