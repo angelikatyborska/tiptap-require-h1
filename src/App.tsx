@@ -6,7 +6,11 @@ import Bold from "@tiptap/extension-bold";
 import Italic from "@tiptap/extension-italic";
 import History from "@tiptap/extension-history";
 import Placeholder from "@tiptap/extension-placeholder";
-import { EditorContent, useEditor } from "@tiptap/react";
+import {
+  EditorContent,
+  textblockTypeInputRule,
+  useEditor,
+} from "@tiptap/react";
 import React from "react";
 import "./App.css";
 
@@ -20,6 +24,44 @@ const DocumentWithTitle = Document.extend({
   content: "title block+",
 });
 
+const adjustLevel = (level: Level) => (level == 1 ? 2 : level);
+
+const CustomHeading = Heading.extend({
+  // code copied from https://github.com/ueberdosis/tiptap/blob/main/packages/extension-heading/src/heading.ts
+  // and modifies to turn all h1s into h2s
+  parseHTML() {
+    return this.options.levels.map((level: Level) => ({
+      tag: `h${level}`,
+      attrs: { level: adjustLevel(level) },
+    }));
+  },
+
+  addKeyboardShortcuts() {
+    return this.options.levels.reduce(
+      (items, level) => ({
+        ...items,
+        ...{
+          [`Mod-Alt-${level}`]: () =>
+            this.editor.commands.toggleHeading({ level: adjustLevel(level) }),
+        },
+      }),
+      {}
+    );
+  },
+
+  addInputRules() {
+    return this.options.levels.map((level) => {
+      return textblockTypeInputRule({
+        find: new RegExp(`^(#{1,${level}})\\s$`),
+        type: this.type,
+        getAttributes: {
+          level: adjustLevel(level),
+        },
+      });
+    });
+  },
+});
+
 export default () => {
   const editor = useEditor({
     extensions: [
@@ -27,7 +69,7 @@ export default () => {
       Paragraph,
       Text,
       Title,
-      Heading,
+      CustomHeading,
       Bold,
       Italic,
       History,
@@ -64,7 +106,7 @@ export default () => {
     <div className="editorWrapper">
       <h1>TipTap Require H1 Demo</h1>
       <div className="editorControls">
-        {([1, 2, 3, 4, 5, 6] as const).map((level) => {
+        {([2, 3, 4, 5, 6] as const).map((level) => {
           return (
             <button
               key={`h${level}`}
