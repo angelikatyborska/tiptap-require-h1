@@ -42,18 +42,7 @@ export default () => {
         },
       }),
     ],
-    content: `
-    <h1>Story 1</h1>
-    <h2>Chapter 1</h2>
-    <p>...</p>
-    <h2>Chapter 2</h2>
-    <p>...</p>
-    <h1>Story 2</h1>
-    <h2>Chapter 1</h2>
-    <p>...</p>
-    <h2>Chapter 2</h2>
-    <p>...</p>
-  `,
+    content: ``,
   });
 
   if (!editor) {
